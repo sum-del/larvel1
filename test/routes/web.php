@@ -45,20 +45,22 @@
 //});
 //Route::get('/user/{id?}','UserController@info');
 //Route::get('/user/exec','UserController@db1');
-Route::get('/user/query','UserController@query');
-Route::get('/user/orm','UserController@orm');
-Route::get('/user/orm2','UserController@orm2');
-Route::get('/user','UserController@show');
-Route::get('/user/del/{id}','UserController@del');
-Route::get('/user/edit/{id}','UserController@edit');
-Route::get('/user/doedit/{id}','UserController@doedit');
-Route::get('/user/detail/{id}','UserController@detail');
-Route::get('/user/adds','UserController@add');
-Route::get('/user/add',function (){
-    return view('add');
+//群组user
+Route::group(['prefix'=>'user'],function (){
+    Route::get('/query','UserController@query');
+    Route::get('/orm','UserController@orm');
+    Route::get('/orm2','UserController@orm2');
+    Route::get('/orm3','UserController@orm3');
+    Route::get('/orm4','UserController@orm4');
+    Route::get('/','UserController@show');
+    Route::get('/del/{id}','UserController@del');
+    Route::get('/edit/{id}','UserController@edit');
+    Route::get('/doedit/{id}','UserController@doedit');
+    Route::get('/detail/{id}','UserController@detail');
+    Route::get('/adds','UserController@add');
+    Route::get('/add',function (){
+        return view('add');
+    });
 });
-//Route::get('/order/{id?}','Admin\OrderController@info')->where('id','[0-9]+');
-//Route::get('order/{id}}'
-//    ,['order'=>'Admin\OrderController@info','as'=>'orders']
-//)->where(['id'=>'[0-9]+']);
+
 

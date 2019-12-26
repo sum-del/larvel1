@@ -68,9 +68,9 @@ class UserController extends Controller{
 //        min,avg,sum
         dd($res);
     }
-//    ORM 使用数据库
+//    ORM 查找数据库
     public function orm(){
-//        $arr =  Student::all();
+        $arr =  Student::all();
 //        $arr = Student::find(4);
 //        $arr = Student::findOrFAIL(10);
 //            $arr = Student::where('id','>',1)->orderBy('id','desc')->get();
@@ -79,29 +79,55 @@ class UserController extends Controller{
 //        $arr = Student::chunk(2,function ($res){
 //            var_dump($res);
 //        });
-//        dd($arr);
+        dd($arr);
     }
 //    ORM2 新增数据
     public function orm2(){
+        #1第一种新增方法
 //        $student = new Student();
 //        $student->name = '特南克斯';
 //        $student->age = 18;
 //        $res = $student->save();
-//        使用模型create 添加数据
+//        2.使用模型create 添加数据
 //        $res = Student::create(['name'=>'小兰','age'=>10]);
-//        dd($res);
+        #3.使用firstOrCreate来添加
+//        $res = Student::firstOrCreate(['name'=>'夏明']);
+        #4.以属性查找新的用户,若没有则建立新的实例
+//        $res = Student::firstOrNew(['name'=>'悟空']);
+//        $result =  $res->save();
+//        dd($result);
+    }
+//    orm 修改数据
+    public function orm3(){
+        #通过模型更新数据
+//        $student = Student::find(1);
+//        $student->name = '消防';
+//        $student->save();
+        #批量更新
+        $res = Student::where('id','1')->update(['name'=>'校方','age'=>15]);
+        dd($res);
+    }
+//    orm 删除数据
+    public function orm4(){
+        #通过获得模型删除数据
+//        $student = Student::find(1);
+//        $student->delete();
+        #通过主键删除
+//        $res = Student::destroy(4);
+        # 通过条件删除
+        $res = Student::where('id','7')->delete();
+        var_dump($res);
     }
 //    遍历数据
     public function show(){
-        $data = DB::table('student')->get();
+        $data =  Student::all();
         return view('user')->with('data',$data);
     }
 //删除
     public function del($id){
-        var_dump($id);
-        $data = DB::table('student')->where('id',$id)->delete();
+        $data = Student::destroy($id);
         if ($data){
-            return ($this->show());
+            return redirect('user');
         }
     }
 //    增加
@@ -112,17 +138,17 @@ class UserController extends Controller{
         }else{
             $_GET['sex']=2;
         }
-        $res = DB::table('student')->insert($_GET);
+        $res = Student::create($_GET);
         if ($res){
             echo '添加成功';
-            return ($this->show());
+            return redirect('user');
         }else{
             echo '添加失败';
         }
     }
 //    展示单个
     public function edit($id){
-        $data = DB::table('student')->find($id);
+        $data = Student::find($id);
         return \view('edit')->with('data',$data)->with('id',$id);
     }
     //编辑
@@ -133,10 +159,11 @@ class UserController extends Controller{
         }else{
             $_GET['sex']=2;
         }
-        $res = DB::table('student')->where('id',$id)->update($_GET);
+//        $res = DB::table('student')->where('id',$id)->update($_GET);
+        $res = Student::where('id',$id)->update($_GET);
         if ($res){
             echo '修改成功';
-            return ($this->show());
+            return redirect('user');
         }else{
             echo '修改失败';
         }

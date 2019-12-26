@@ -22,7 +22,6 @@
                 <td>
                     <a href="/user/edit/{{$v->id}}">编辑</a>
                     <a href="/user/del/{{$v->id}}">删除</a>
-{{--                    <a href="/user/detail/{{$v->id}}">查看</a>--}}
                 </td>
             </tr>
         @endforeach
